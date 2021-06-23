@@ -13,7 +13,8 @@ import com.example.randomjoke.viewmodels.JokeScreenViewModel
 class JokeFragment: Fragment() {
 
     private val viewModel: JokeScreenViewModel by lazy {
-        ViewModelProvider(this).get(JokeScreenViewModel::class.java)
+        val activity = requireNotNull(this.activity)
+        ViewModelProvider(this,JokeScreenViewModel.Factory(activity.application)).get(JokeScreenViewModel::class.java)
     }
 
     override fun onCreateView(

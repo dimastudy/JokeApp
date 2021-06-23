@@ -26,7 +26,8 @@
             android:paddingBottom="4dp">
 
             <TextView
-
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:id="@+id/tv_joke_english"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -12,9 +12,4 @@ class JokesListViewModel(application: Application): AndroidViewModel(application
     val jokesList = repository.jokes
 
 
-
-
-
-
-
 }

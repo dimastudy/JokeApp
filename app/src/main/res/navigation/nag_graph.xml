@@ -9,5 +9,14 @@
         android:id="@+id/jokeFragment"
         android:name="com.example.randomjoke.joke.JokeFragment"
         android:label="fragment_joke_screen"
-        tools:layout="@layout/fragment_joke_screen" />
+        tools:layout="@layout/fragment_joke_screen" >
+        <action
+            android:id="@+id/action_jokeFragment_to_jokeListFragment"
+            app:destination="@id/jokeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/jokeListFragment"
+        android:name="com.example.randomjoke.jokelist.JokeListFragment"
+        android:label="fragment_jokes_list"
+        tools:layout="@layout/fragment_jokes_list" />
 </navigation>

@@ -17,15 +17,41 @@ class JokeScreenViewModel(application: Application): AndroidViewModel(applicatio
     val currentJoke: LiveData<JokeNetwork>
         get() = _currentJoke
 
+    private val _navigateToListFavorite = MutableLiveData<Boolean>()
+    val navigateToListFavorite: LiveData<Boolean>
+        get() = _navigateToListFavorite
+
     val repository = JokesRepository(getDatabase(application))
 
     fun addCurrentJokeToFavorite(){
         viewModelScope.launch {
             if(currentJoke.value != null) {
                 repository.addJokeToFavorite(currentJoke.value!!)
+                _isButtonVisible.value = true
             }
         }
     }
+
+    fun navigateToListScreen(){
+        _navigateToListFavorite.value = true
+    }
+
+    fun doneNavigateToListScreen(){
+        _navigateToListFavorite.value = false
+    }
+
+
+
+
+    private val _isButtonVisible = MutableLiveData<Boolean>()
+    val isButtonVisible: LiveData<Boolean>
+        get() = _isButtonVisible
+
+
+    fun newJokeDone(){
+        _isButtonVisible.value = false
+    }
+
 
 
     init {
@@ -36,6 +62,7 @@ class JokeScreenViewModel(application: Application): AndroidViewModel(applicatio
     fun getJokeFromService() {
         viewModelScope.launch {
             _currentJoke.value = JokeApi.retrofitService.getJoke()
+            newJokeDone()
         }
     }
 

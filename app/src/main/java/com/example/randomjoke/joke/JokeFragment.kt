@@ -1,5 +1,6 @@
 package com.example.randomjoke.joke
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.randomjoke.databinding.FragmentJokeScreenBinding
 import com.example.randomjoke.viewmodels.JokeScreenViewModel
 
@@ -35,6 +37,22 @@ class JokeFragment: Fragment() {
             }
         })
 
+
+        viewModel.navigateToListFavorite.observe(viewLifecycleOwner, Observer {
+            if (it){
+                this.findNavController().navigate(JokeFragmentDirections.actionJokeFragmentToJokeListFragment())
+                viewModel.doneNavigateToListScreen()
+            }
+        })
+
+        viewModel.isButtonVisible.observe(viewLifecycleOwner, Observer {
+            if (it){
+                binding.btnAddJokeToFavorite.visibility = View.INVISIBLE
+            }
+            else{
+                binding.btnAddJokeToFavorite.visibility = View.VISIBLE
+            }
+        })
 
 
         return binding.root

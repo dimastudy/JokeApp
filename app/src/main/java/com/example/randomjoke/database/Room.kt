@@ -7,27 +7,27 @@ import androidx.room.*
 @Dao
 interface JokeDao {
 
-    @Insert
-    suspend fun insertJoke(joke: JokeEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertJoke(joke: JokeEntity)
 
     @Query("select * from jokeentity")
     fun getJokes(): LiveData<List<JokeEntity>>
 
-    @Delete
-    suspend fun deleteJoke(joke: JokeEntity)
+    @Delete(entity = JokeEntity::class)
+    fun deleteJoke(joke: JokeEntity)
 
 }
 
 
-@Database(entities = [JokeEntity::class], version = 1)
-abstract class JokeDatabase() : RoomDatabase(){
+@Database(entities = [JokeEntity::class], version = 1, exportSchema = false)
+abstract class JokeDatabase: RoomDatabase(){
     abstract val jokeDao: JokeDao
 }
 
 private lateinit var INSTANCE: JokeDatabase
 
 fun getDatabase(context: Context): JokeDatabase {
-    synchronized(JokeDatabase::class){
+    synchronized(JokeDatabase::class.java){
         if (!::INSTANCE.isInitialized){
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 JokeDatabase::class.java,
